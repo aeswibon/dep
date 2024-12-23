@@ -8,12 +8,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var globalCmd = &cobra.Command{
-	Use:     "global [dependencies]",
-	Short:   "Install global dependencies",
-	Long:    "Install global dependencies using the specified package manager.",
+var listCmd = &cobra.Command{
+	Use:     "list",
+	Short:   "List all dependencies",
+	Long:    "List all dependencies using the specified package manager.",
 	GroupID: "dependenciesGroup",
-	Args:    cobra.MinimumNArgs(1),
+	Args:    cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Load the configuration file
 		config, err := utils.LoadConfig()
@@ -36,7 +36,7 @@ var globalCmd = &cobra.Command{
 		}
 
 		// Execute the add command
-		if err := pm.ExecuteCommand("global", args, config, &globalFlags); err != nil {
+		if err := pm.ExecuteCommand("list", args, config, &globalFlags); err != nil {
 			fmt.Printf("Error executing command: %v\n", err)
 			return
 		}
@@ -44,5 +44,5 @@ var globalCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(globalCmd)
+	rootCmd.AddCommand(listCmd)
 }

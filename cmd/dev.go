@@ -13,7 +13,7 @@ var devCmd = &cobra.Command{
 	Short:   "Install dev dependencies",
 	Long:    "Install dev dependencies using the specified package manager.",
 	GroupID: "dependenciesGroup",
-	Args:    cobra.NoArgs,
+	Args:    cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		// Load the configuration file
 		config, err := utils.LoadConfig()

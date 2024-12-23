@@ -13,7 +13,7 @@ var scriptCmd = &cobra.Command{
 	Short:   "Run a script",
 	Long:    "Run a script using the specified package manager.",
 	GroupID: "scriptGroup",
-	Args:    cobra.NoArgs,
+	Args:    cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		// Load the configuration file
 		config, err := utils.LoadConfig()

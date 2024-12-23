@@ -13,7 +13,7 @@ var upgradeCmd = &cobra.Command{
 	Short:   "Upgrade all dependencies",
 	Long:    "Upgrade all dependencies using the specified package manager.",
 	GroupID: "dependenciesGroup",
-	Args:    cobra.MinimumNArgs(1),
+	Args:    cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Load the configuration file
 		config, err := utils.LoadConfig()

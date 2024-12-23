@@ -23,6 +23,7 @@ var rootCmd = &cobra.Command{
 // Execute runs the root command
 func Execute() {
 	rootCmd.AddGroup(dependenciesGroup)
+	rootCmd.AddGroup(scriptGroup)
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Printf("Error executing command: %v\n", err)
 		os.Exit(1)

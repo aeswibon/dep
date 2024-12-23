@@ -6,3 +6,8 @@ var dependenciesGroup = &cobra.Group{
 	ID:    "dependenciesGroup",
 	Title: "Manage Dependencies",
 }
+
+var scriptGroup = &cobra.Group{
+	ID:    "scriptGroup",
+	Title: "Run Scripts",
+}

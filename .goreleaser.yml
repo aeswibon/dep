@@ -1,0 +1,9 @@
+project_name: dep
+
+builds:
+  - id: dep
+    binary: dep
+    goos:
+      - darwin
+    goarch:
+      - amd64

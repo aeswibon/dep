@@ -19,6 +19,10 @@ func GetPackageManager(manager string) (types.PackageManager, error) {
 		return &BunPackageManager{}, nil
 	case "pnpm":
 		return &PnpmPackageManager{}, nil
+	case "pip":
+		return &PipPackageManager{}, nil
+	case "pipenv":
+		return &PipenvPackageManager{}, nil
 	default:
 		return nil, fmt.Errorf("unsupported package manager: %s", manager)
 	}

@@ -8,46 +8,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var scriptCmd = &cobra.Command{
-	Use:     "script [script]",
-	Short:   "Run a script",
-	Long:    "Run a script using the specified package manager.",
-	GroupID: "scriptGroup",
-	Args:    cobra.MinimumNArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
-		// Load the configuration file
-		config, err := utils.LoadConfig()
-		if err != nil {
-			fmt.Printf("Error loading configuration: %v\n", err)
-			return
-		}
-
-		// Get the package manager from the configuration
-		pm, err := manager.GetPackageManager(config.PackageManager)
-		if err != nil {
-			fmt.Printf("Error getting package manager: %v\n", err)
-			return
-		}
-
-		// check if the command is available
-		if err := utils.CheckTool(pm.GetCommand()); err != nil {
-			fmt.Printf("Error checking command: %v\n", err)
-			return
-		}
-
-		// Execute the add command
-		if err := pm.ExecuteCommand("script", args, config, &globalFlags); err != nil {
-			fmt.Printf("Error executing command: %v\n", err)
-			return
-		}
-	},
-}
-
-var testCmd = &cobra.Command{
-	Use:     "test",
-	Short:   "Run tests",
-	Long:    "Run tests using the specified package manager.",
-	GroupID: "scriptGroup",
+var cacheClearCmd = &cobra.Command{
+	Use:     "clear",
+	Short:   "Clear the cache",
+	Long:    "Clear the cache of the package manager.",
+	GroupID: "dependenciesGroup",
 	Args:    cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Load the configuration file
@@ -71,7 +36,42 @@ var testCmd = &cobra.Command{
 		}
 
 		// Execute the add command
-		if err := pm.ExecuteCommand("test", args, config, &globalFlags); err != nil {
+		if err := pm.ExecuteCommand("cache-clean", args, config, &globalFlags); err != nil {
+			fmt.Printf("Error executing command: %v\n", err)
+			return
+		}
+	},
+}
+
+var cacheVerifyCmd = &cobra.Command{
+	Use:     "verify",
+	Short:   "Verify the cache",
+	Long:    "Verify the cache of the package manager.",
+	GroupID: "dependenciesGroup",
+	Args:    cobra.NoArgs,
+	Run: func(cmd *cobra.Command, args []string) {
+		// Load the configuration file
+		config, err := utils.LoadConfig()
+		if err != nil {
+			fmt.Printf("Error loading configuration: %v\n", err)
+			return
+		}
+
+		// Get the package manager from the configuration
+		pm, err := manager.GetPackageManager(config.PackageManager)
+		if err != nil {
+			fmt.Printf("Error getting package manager: %v\n", err)
+			return
+		}
+
+		// check if the command is available
+		if err := utils.CheckTool(pm.GetCommand()); err != nil {
+			fmt.Printf("Error checking command: %v\n", err)
+			return
+		}
+
+		// Execute the add command
+		if err := pm.ExecuteCommand("cache-verify", args, config, &globalFlags); err != nil {
 			fmt.Printf("Error executing command: %v\n", err)
 			return
 		}
@@ -79,6 +79,6 @@ var testCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(scriptCmd)
-	rootCmd.AddCommand(testCmd)
+	rootCmd.AddCommand(cacheClearCmd)
+	rootCmd.AddCommand(cacheVerifyCmd)
 }

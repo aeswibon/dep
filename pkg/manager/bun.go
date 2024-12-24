@@ -15,20 +15,22 @@ func (b *BunPackageManager) ExecuteCommand(command string, args []string, config
 	var cmdArgs []string
 	// switch statement to handle different commands
 	commandMap := map[string][]string{
-		"install":       {"install"},
 		"add":           {"add"},
+		"cache-clean":   {"pm", "cache", "clear"},
 		"dev":           {"add", "-D"},
 		"global":        {"add", "-g"},
-		"remove":        {"remove"},
-		"remove-global": {"global", "remove"},
-		"update":        {"update"},
-		"upgrade":       {"upgrade"},
 		"init":          {"init", "-y"},
-		"run-script":    {"run"},
-		"tests":         {"test"},
+		"install":       {"install"},
 		"list":          {"pm", "ls"},
 		"outdated":      {"pm", "outdated"},
-		"cache-clean":   {"pm", "cache", "clear"},
+		"package-info":  {"pm", "info"},
+		"rebuild-deps":  {"rebuild"},
+		"remove":        {"remove"},
+		"remove-global": {"global", "remove"},
+		"run-script":    {"run"},
+		"tests":         {"test"},
+		"update":        {"update"},
+		"upgrade":       {"upgrade"},
 	}
 
 	// Check if the command exists in the map

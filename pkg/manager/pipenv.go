@@ -13,21 +13,34 @@ type PipenvPackageManager struct{}
 // ExecuteCommand executes the given command with the provided arguments
 func (p *PipenvPackageManager) ExecuteCommand(command string, args []string, config *types.Config, flags *types.GlobalFlags) error {
 	var cmdArgs []string
-	// switch statement to handle different commands
+
 	commandMap := map[string][]string{
-		"install":     {"install"},
-		"add":         {"install"},
-		"dev":         {"install", "--dev"},
-		"remove":      {"uninstall"},
-		"update":      {"update"},
-		"upgrade":     {"update"},
-		"init":        {},
-		"run-script":  {"run"},
-		"test":        {"run", "test"},
-		"list":        {"graph"},
-		"outdated":    {"update", "--outdated"},
-		"cache-clean": {"clean"},
-		"audit":       {"check"},
+		// basic commands
+		"add":     {"install"},          // install a package
+		"local":   {"install"},          // install all dependencies
+		"dev":     {"install", "--dev"}, // install a package as a dev dependency
+		"remove":  {"uninstall"},        // remove a package
+		"update":  {"update"},           // update a package
+		"upgrade": {"update"},           // update all packages
+
+		// project management commands
+		"init":   {},               // create a new Pipfile
+		"script": {"run"},          // run a script
+		"test":   {"run", "test"},  // run tests
+		"build":  {"run", "build"}, // build the project
+
+		// dependency & analysis commands
+		"list":     {"graph"},                // list all dependencies
+		"outdated": {"update", "--outdated"}, // list outdated dependencies
+		"scan":     {"check"},                // audit the project for vulnerabilities
+		"fix":      {"check", "--outdated"},  // fix vulnerabilities
+		"dedupe":   {"install"},              // remove duplicate dependencies
+		"lock":     {"lock"},                 // lock dependencies
+		"prune":    {"clean"},                // remove extraneous packages
+
+		// configuration & cache commands
+		"config": {"check"}, // view or set configuration
+		"cache":  {"cache"}, // manage the cache
 	}
 
 	// Check if the command exists in the map

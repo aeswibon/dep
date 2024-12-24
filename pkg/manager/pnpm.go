@@ -13,27 +13,41 @@ type PnpmPackageManager struct{}
 // ExecuteCommand executes the given command with the provided arguments
 func (p *PnpmPackageManager) ExecuteCommand(command string, args []string, config *types.Config, flags *types.GlobalFlags) error {
 	var cmdArgs []string
-	// switch statement to handle different commands
+
 	commandMap := map[string][]string{
-		"install":         {"install"},
-		"add":             {"add"},
-		"dev":             {"add", "-D"},
-		"global":          {"add", "-g"},
-		"remove":          {"remove"},
-		"remove-global":   {"global", "remove"},
-		"update":          {"update"},
-		"upgrade":         {"upgrade"},
-		"init":            {"init", "-y"},
-		"run-script":      {},
-		"tests":           {"test"},
-		"list":            {"list"},
-		"outdated":        {"outdated"},
-		"cache-clean":     {"store", "prune"},
-		"cache-verify":    {"store", "verify"},
-		"publish-package": {"publish"},
-		"login":           {"login"},
-		"audit":           {"audit"},
-		"fix-audit":       {"audit", "fix"},
+		// basic commands
+		"add":     {"add"},           // install a package
+		"local":   {"install"},       // install all dependencies
+		"install": {"install", "-g"}, // install a package globally
+		"dev":     {"install", "-D"}, // install a package as a dev dependency
+		"remove":  {"remove"},        // remove a package
+		"upgrade": {"update"},        // update all packages
+
+		// project management commands
+		"init":   {"init"},  // create a new package.json file
+		"script": {},        // run a script
+		"test":   {"test"},  // run tests
+		"build":  {"build"}, // build the project
+
+		// dependency & analysis commands
+		"list":     {"list"},         // list all dependencies
+		"outdated": {"outdated"},     // list outdated dependencies
+		"scan":     {"audit"},        // audit the project for vulnerabilities
+		"fix":      {"audit", "fix"}, // fix vulnerabilities
+		"dedupe":   {"dedupe"},       // remove duplicate dependencies
+		"lock":     {"import"},       // lock dependencies
+		"prune":    {"prune"},        // remove extraneous packages
+
+		// configuration & cache commands
+		"config": {"config"}, // view or set configuration
+		"cache":  {"cache"},  // manage the cache
+
+		// workspace commands
+		"workspace": {"workspace"}, // manage workspaces
+
+		// publish commands
+		"publish": {"publish"}, // publish a package
+		"login":   {"login"},   // login to the registry
 	}
 
 	// Check if the command exists in the map

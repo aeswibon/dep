@@ -22,6 +22,7 @@ var rootCmd = &cobra.Command{
 
 // Execute runs the root command
 func Execute() {
+	rootCmd.AddGroup(globalGroup)
 	rootCmd.AddGroup(dependenciesGroup)
 	rootCmd.AddGroup(scriptGroup)
 	if err := rootCmd.Execute(); err != nil {
